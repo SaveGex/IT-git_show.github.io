@@ -1,0 +1,16 @@
+#english:hover{
+    background-color: rgba(83, 83, 83, 0.751);
+}
+#english{
+    color: aliceblue;
+}
+
+.navbar-nav{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+a{
+    color: white!important;
+}

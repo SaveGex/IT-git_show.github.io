@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+
+{% block navbar_addition %}
+{%load static%}
+<link rel="stylesheet" href="{% static 'general/general.css' %}">
+<a id ="create" href="{% url 'General:create' %}" type="button" class="btn btn-dark">Create</a>
+<style>
+    #create{
+        color: #e77e51;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="row justify-content-md-center d-flex col-12 gap-4">
+    {% for page_obj in page %}
+            <div class="card" style="width: 18rem;">
+                <img src="{{ page_obj.link_image }}" alt="Profile image" class="card-img-top">
+                <div class="card-body">
+                <h5 class="card-title">{{page_obj.name}}</h5>
+                <p class="card-text">{{page_obj.description|slice:":20"}}</p>
+                <a href="{{page_obj.link}}" class="btn btn-primary">Go somewhere</a>
+                <button type="button" class="btn btn-outline-danger" 
+                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-id="{{ page_obj.pk }}">
+                    Delete
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Deleted sentence: <span id="modal-sentence"></span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <form id="delete-form" method="post" action="">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var exampleModal = document.getElementById('exampleModal')
+    exampleModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget
+        var id = button.getAttribute('data-id')
+        var processedSentence = button.getAttribute('data-processed-sentence')
+
+        // Update the modal content
+        var modalSentence = exampleModal.querySelector('#modal-sentence')
+        modalSentence.textContent = processedSentence
+
+        // Update the form action with the correct delete URL
+        var deleteForm = exampleModal.querySelector('#delete-form')
+        deleteForm.action = "{% url 'General:delete' 0 %}".replace('0', id)
+    })
+})
+</script>
+{% endblock %}
+
+
+{% block script_addition %}
+
+{% endblock %}

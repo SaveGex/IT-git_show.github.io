@@ -1,0 +1,16 @@
+.content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center; /* Центрує по горизонталі */
+    align-items: center; /* Центрує по вертикалі */
+    height: 100vh; /* Висота 100% від висоти вікна браузера */
+}
+
+.decor {
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Легка прозорість для фону форми */
+    border-radius: 10px;
+}
